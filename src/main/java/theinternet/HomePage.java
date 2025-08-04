@@ -4,8 +4,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import theinternet.core.BasePage;
 import theinternet.pages.AlertsPage;
+import theinternet.pages.FramePage;
+
+import java.time.Duration;
 
 public class HomePage extends BasePage {
 
@@ -20,5 +24,22 @@ public class HomePage extends BasePage {
     public AlertsPage selectJavaScriptAlerts() {
         click(alertsJSLink);
         return new AlertsPage(driver);
+    }
+
+    @FindBy(xpath = "//a[text()='Frames']")
+    WebElement frame;
+
+    public HomePage selectFrame() {
+        click(frame);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return this;
+    }
+
+    @FindBy(xpath = "//a[text()='Nested Frames']")
+    WebElement nestedFrames;
+
+    public FramePage selectNestedFrames() {
+        click(nestedFrames);
+        return new FramePage(driver);
     }
 }
