@@ -1,5 +1,6 @@
 package theinternet.core;
 
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -18,7 +19,6 @@ public class BasePage {
         PageFactory.initElements(driver, this);
     }
 
-
     public void click(WebElement element) {
         element.click();
     }
@@ -29,5 +29,11 @@ public class BasePage {
             element.clear();
             element.sendKeys(text);
         }
+    }
+
+    public void shouldHaveText(WebElement element, String expectedText){
+        String actualText = element.getText();
+
+        Assertions.assertEquals(expectedText, actualText, "Element text doesn't match!");
     }
 }

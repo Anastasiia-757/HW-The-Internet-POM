@@ -11,33 +11,37 @@ public class FramePage extends BasePage {
     }
 
     public String getTextFromLeftFrame() {
+        driver.switchTo().defaultContent();
         driver.switchTo().frame("frame-top");
         driver.switchTo().frame("frame-left");
         String text = driver.findElement(By.tagName("body")).getText();
-        driver.switchTo().defaultContent();
         return text;
     }
 
     public String getTextFromMiddleFrame() {
+        driver.switchTo().defaultContent();
         driver.switchTo().frame("frame-top");
         driver.switchTo().frame("frame-middle");
         String text = driver.findElement(By.id("content")).getText();
-        driver.switchTo().defaultContent();
         return text;
     }
 
     public String getTextFromRightFrame(){
+        driver.switchTo().defaultContent();
         driver.switchTo().frame("frame-top");
         driver.switchTo().frame("frame-right");
         String text = driver.findElement(By.tagName("body")).getText();
-        driver.switchTo().defaultContent();
         return text;
     }
 
     public String getTextFromBottomFrame(){
+        driver.switchTo().defaultContent();
         driver.switchTo().frame("frame-bottom");
         String text = driver.findElement(By.tagName("body")).getText();
-        driver.switchTo().defaultContent();
         return text;
+    }
+
+    public void returnToDefaultContent(){
+        driver.switchTo().defaultContent();
     }
 }

@@ -4,9 +4,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import theinternet.core.BasePage;
 import theinternet.pages.AlertsPage;
+import theinternet.pages.DropDownPage;
 import theinternet.pages.FramePage;
 
 import java.time.Duration;
@@ -22,16 +24,19 @@ public class HomePage extends BasePage {
     WebElement alertsJSLink;
 
     public AlertsPage selectJavaScriptAlerts() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(alertsJSLink));
         click(alertsJSLink);
         return new AlertsPage(driver);
     }
 
-    @FindBy(xpath = "//a[text()='Frames']")
+    @FindBy(xpath = "//a[.='Frames']")
     WebElement frame;
 
     public HomePage selectFrame() {
-        click(frame);
+        driver.get("https://the-internet.herokuapp.com/");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(frame)).click();
         return this;
     }
 
@@ -41,5 +46,13 @@ public class HomePage extends BasePage {
     public FramePage selectNestedFrames() {
         click(nestedFrames);
         return new FramePage(driver);
+    }
+
+    @FindBy(xpath = "//a[.='Dropdown']")
+    WebElement dropdown;
+
+    public DropDownPage selectDropdown() {
+        click(dropdown);
+        return new DropDownPage(driver);
     }
 }

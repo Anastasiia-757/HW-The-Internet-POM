@@ -1,9 +1,8 @@
 package theinternet.tests;
 
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Alert;
 import theinternet.HomePage;
 import theinternet.core.TestBase;
 import theinternet.pages.AlertsPage;
@@ -42,13 +41,22 @@ public class AlertsFrameWindowsTests extends TestBase {
     }
 
     @Test
-    public void verifyNestedFramesText(){
-        frame=new HomePage(driver)
+    public void verifyNestedFramesText() {
+        frame = new HomePage(driver)
                 .selectFrame()
                 .selectNestedFrames();
-        Assertions.assertEquals("LEFT", frame.getTextFromLeftFrame());
-        Assertions.assertEquals("MIDDLE", frame.getTextFromMiddleFrame());
-        Assertions.assertEquals("RIGHT", frame.getTextFromRightFrame());
-        Assertions.assertEquals("BOTTOM", frame.getTextFromBottomFrame());
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(frame.getTextFromLeftFrame()).as("Left frame text")
+                .isEqualTo("LEFT");
+        softly.assertThat(frame.getTextFromMiddleFrame()).as("Middle frame text")
+                .isEqualTo("MIDDLE");
+        softly.assertThat(frame.getTextFromRightFrame()).as("Right frame text")
+                .isEqualTo("RIGHT");
+        softly.assertThat(frame.getTextFromBottomFrame()).as("Bottom frame text")
+                .isEqualTo("BOTTOM");
+
+        softly.assertAll();
+        frame.returnToDefaultContent();
+
     }
 }
