@@ -10,6 +10,7 @@ import theinternet.core.BasePage;
 import theinternet.pages.AlertsPage;
 import theinternet.pages.DropDownPage;
 import theinternet.pages.FramePage;
+import theinternet.pages.interactions.DragAndDropPage;
 
 import java.time.Duration;
 
@@ -54,5 +55,13 @@ public class HomePage extends BasePage {
     public DropDownPage selectDropdown() {
         click(dropdown);
         return new DropDownPage(driver);
+    }
+
+    @FindBy(xpath = "//a[@href='/drag_and_drop']")
+    WebElement dragAndDropLink;
+
+    public DragAndDropPage selectDragAndDropLink() {
+        click(dragAndDropLink);
+        return new DragAndDropPage(driver);
     }
 }
