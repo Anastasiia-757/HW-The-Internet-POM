@@ -1,5 +1,6 @@
 package theinternet.core;
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +9,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.Duration;
 
 public class BasePage {
@@ -16,6 +20,7 @@ public class BasePage {
     protected WebDriverWait wait;
     public static JavascriptExecutor js;
     public static Actions actions;
+    public static SoftAssertions softly;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -23,6 +28,7 @@ public class BasePage {
         PageFactory.initElements(driver, this);
         js = (JavascriptExecutor) driver;
         actions = new Actions(driver);
+        softly = new SoftAssertions();
     }
 
     public void click(WebElement element) {
@@ -54,5 +60,23 @@ public class BasePage {
         String actualText = element.getText();
 
         Assertions.assertEquals(expectedText, actualText, "Element text doesn't match!");
+    }
+
+    public void verifyLinks(String url) {
+
+        try {
+            URL linkURL = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) linkURL.openConnection();
+            connection.setConnectTimeout(5000);
+            connection.connect();
+            if (connection.getResponseCode() >= 400) {
+                System.out.println(url + " - " + connection.getResponseMessage() + " is a broken link");
+            } else {
+                System.out.println(url + " - " + connection.getResponseMessage());
+            }
+        } catch (Exception e) {
+            System.out.println(url + " - " + e.getMessage() + " ERROR occurred");
+            ;
+        }
     }
 }

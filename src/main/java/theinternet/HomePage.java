@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import theinternet.core.BasePage;
 import theinternet.pages.AlertsPage;
+import theinternet.pages.BrokenImagesPage;
 import theinternet.pages.DropDownPage;
 import theinternet.pages.FramePage;
 import theinternet.pages.interactions.DragAndDropPage;
@@ -63,5 +64,13 @@ public class HomePage extends BasePage {
     public DragAndDropPage selectDragAndDropLink() {
         click(dragAndDropLink);
         return new DragAndDropPage(driver);
+    }
+
+    @FindBy(xpath = "//a[@href='/broken_images']")
+    WebElement brokenImages;
+
+    public BrokenImagesPage selectBrokenImagesLink() {
+        click(brokenImages);
+        return new BrokenImagesPage(driver);
     }
 }
