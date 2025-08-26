@@ -7,10 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import theinternet.core.BasePage;
-import theinternet.pages.AlertsPage;
-import theinternet.pages.BrokenImagesPage;
-import theinternet.pages.DropDownPage;
-import theinternet.pages.FramePage;
+import theinternet.pages.*;
 import theinternet.pages.interactions.DragAndDropPage;
 
 import java.time.Duration;
@@ -72,5 +69,12 @@ public class HomePage extends BasePage {
     public BrokenImagesPage selectBrokenImagesLink() {
         click(brokenImages);
         return new BrokenImagesPage(driver);
+    }
+    @FindBy(xpath = "//a[@href='/upload']")
+    WebElement upload;
+
+    public FileUploaderPage selectFileUploaderLink() {
+        click(upload);
+        return new FileUploaderPage(driver);
     }
 }
